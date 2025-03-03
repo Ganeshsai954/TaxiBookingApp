@@ -1,8 +1,10 @@
-package com.example.taxibooking
+package s9648482ravipatiganeshsai.taxi.bookingapp
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -40,6 +42,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.database.FirebaseDatabase
 
 class PassengerSignUpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -195,6 +198,45 @@ fun PassengerSignUpScreen() {
 
             Text(
                 modifier = Modifier
+                    .clickable {
+                        when {
+
+                            accountName.isBlank() -> {
+                                Toast.makeText(context, "UserName missing", Toast.LENGTH_SHORT)
+                                    .show()
+
+                            }
+
+                            accountEmail.isBlank() -> {
+                                Toast.makeText(context, "EmailId missing", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+
+                            selectedGender.isBlank() -> {
+                                Toast.makeText(context, "Gender missing", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+
+                            accountPassword.isBlank() -> {
+                                Toast.makeText(context, "Password missing", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+
+                            else -> {
+
+                                val passengerData = PassengerData(
+                                    accountName,
+                                    accountEmail,
+                                    selectedGender,
+                                    accountPassword
+
+                                )
+
+                                registerPassenger(passengerData, context)
+
+                            }
+                        }
+                    }
                     .fillMaxWidth()
                     .padding(horizontal = 12.dp)
                     .background(
@@ -218,7 +260,7 @@ fun PassengerSignUpScreen() {
                 )
             )
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(4.dp))
 
             Text(
                 modifier = Modifier
@@ -241,9 +283,47 @@ fun PassengerSignUpScreen() {
     }
 }
 
+fun registerPassenger(passengerData: PassengerData, context: Context) {
+
+    val firebaseDatabase = FirebaseDatabase.getInstance()
+    val databaseReference = firebaseDatabase.getReference("TaxiBooking")
+
+    databaseReference.child(passengerData.emailId.replace(".", ","))
+        .setValue(passengerData)
+        .addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Toast.makeText(context, "You Registered Successfully", Toast.LENGTH_SHORT)
+                    .show()
+//                context.startActivity(Intent(context, CheckInActivity::class.java))
+//                (context as Activity).finish()
+
+            } else {
+                Toast.makeText(
+                    context,
+                    "Registration Failed",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+        .addOnFailureListener { _ ->
+            Toast.makeText(
+                context,
+                "Something went wrong",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+}
+
 
 @Preview(showBackground = true)
 @Composable
 fun PassengerSignUpScreenPreview() {
     PassengerSignUpScreen()
 }
+
+data class PassengerData(
+    var userName : String = "",
+    var emailId : String = "",
+    var gender : String = "",
+    var password: String = ""
+)

@@ -1,6 +1,5 @@
-package com.example.taxibooking.ui.theme
+package s9648482ravipatiganeshsai.taxi.bookingapp.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

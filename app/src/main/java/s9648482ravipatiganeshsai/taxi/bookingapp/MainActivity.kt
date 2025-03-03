@@ -1,14 +1,14 @@
-package com.example.taxibooking
+package s9648482ravipatiganeshsai.taxi.bookingapp
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -16,44 +16,66 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-class PassengerSignInActivity : ComponentActivity() {
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContent {
-            PassengerSignInScreen()
+            TaxiStartingValidation()
         }
     }
 }
 
 @Composable
-fun PassengerSignInScreen() {
-
-    var accountEmail by remember { mutableStateOf("") }
-    var accountPassword by remember { mutableStateOf("") }
-
+fun TaxiStartingValidation() {
     val context = LocalContext.current as Activity
+    var showSplash by remember { mutableStateOf(true) }
 
+    DisposableEffect(Unit) {
+        val job = CoroutineScope(Dispatchers.Main).launch {
+            delay(3000)
+            showSplash = false
+        }
+        onDispose { job.cancel() }
+    }
+
+    if (showSplash) {
+        TaxiStartingScreen()
+
+    } else {
+        context.startActivity(Intent(context, PassengerSignInActivity::class.java))
+        context.finish()
+    }
+
+}
+
+
+@Composable
+fun TaxiStartingScreen() {
 
     Column(
         modifier = Modifier
@@ -62,7 +84,6 @@ fun PassengerSignInScreen() {
                 color = colorResource(id = R.color.first_color),
             ),
     ) {
-
 
         Image(
             painter = painterResource(id = R.drawable.taxi_img1), // Replace with your actual SVG drawable
@@ -100,7 +121,7 @@ fun PassengerSignInScreen() {
                 )
         ) {
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.weight(1f))
             Text(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 text = "Taxi Booking App",
@@ -108,76 +129,21 @@ fun PassengerSignInScreen() {
             )
 
             Spacer(modifier = Modifier.height(24.dp))
-
-            OutlinedTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp)
-                    .background(
-                        color = colorResource(id = R.color.white),
-                    ),
-                value = accountEmail,
-                onValueChange = { accountEmail = it },
-                placeholder = { Text(text = "Email") }
+            Text(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                text = "A Project By",
+                color = Color.White,
+                style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
             )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            OutlinedTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp)
-                    .background(
-                        color = colorResource(id = R.color.white),
-                    ),
-                value = accountPassword,
-                onValueChange = { accountPassword = it },
-                placeholder = { Text(text = "Password") }
-            )
-
-            Spacer(modifier = Modifier.height(45.dp))
 
             Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp)
-                    .background(
-                        color = colorResource(id = R.color.second_color),
-                        shape = RoundedCornerShape(
-                            10.dp
-                        )
-                    )
-                    .border(
-                        width = 2.dp,
-                        color = colorResource(id = R.color.second_color),
-                        shape = RoundedCornerShape(
-                            10.dp
-                        )
-                    )
-                    .padding(vertical = 12.dp, horizontal = 12.dp),
-                text = "Login",
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.titleMedium.copy(
-                    color = colorResource(id = R.color.first_color),
-                )
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                text = "Ravipati Ganesh Sai",
+                color = Color.White,
+                style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
             )
 
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp)
-                    .clickable {
-                        context.startActivity(Intent(context, PassengerSignUpActivity::class.java))
-                        context.finish()
-                    },
-                text = "Take Me To Registration",
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.titleMedium.copy(
-                    color = colorResource(id = R.color.second_color),
-                )
-            )
+            Spacer(modifier = Modifier.weight(1f))
 
 
         }
@@ -185,9 +151,8 @@ fun PassengerSignInScreen() {
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
-fun PassengerSignInScreenPreview() {
-    PassengerSignInScreen()
+fun TaxiStartingScreenPreview() {
+    TaxiStartingScreen()
 }

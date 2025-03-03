@@ -13,13 +13,13 @@
         android:theme="@style/Theme.TaxiBooking"
         tools:targetApi="31">
         <activity
-            android:name=".PassengerSignUpActivity"
+            android:name="s9648482ravipatiganeshsai.taxi.bookingapp.PassengerSignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".PassengerSignInActivity"
+            android:name="s9648482ravipatiganeshsai.taxi.bookingapp.PassengerSignInActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name="s9648482ravipatiganeshsai.taxi.bookingapp.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.TaxiBooking">

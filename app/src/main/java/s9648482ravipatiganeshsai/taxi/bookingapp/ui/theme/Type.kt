@@ -1,4 +1,4 @@
-package com.example.taxibooking.ui.theme
+package s9648482ravipatiganeshsai.taxi.bookingapp.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

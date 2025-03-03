@@ -1,14 +1,15 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.gms.google-services")
 }
 
 android {
-    namespace = "com.example.taxibooking"
+    namespace = "s9648482ravipatiganeshsai.taxi.bookingapp"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.taxibooking"
+        applicationId = "s9648482ravipatiganeshsai.taxi.bookingapp"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -69,4 +70,5 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.firebase.database.ktx)
 }

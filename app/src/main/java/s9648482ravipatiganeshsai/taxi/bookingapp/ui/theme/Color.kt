@@ -1,4 +1,4 @@
-package com.example.taxibooking.ui.theme
+package s9648482ravipatiganeshsai.taxi.bookingapp.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
