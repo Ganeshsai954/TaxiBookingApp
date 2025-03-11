@@ -13,13 +13,19 @@
         android:theme="@style/Theme.TaxiBooking"
         tools:targetApi="31">
         <activity
-            android:name="s9648482ravipatiganeshsai.taxi.bookingapp.PassengerSignUpActivity"
+            android:name=".BookRideActivity"
             android:exported="false" />
         <activity
-            android:name="s9648482ravipatiganeshsai.taxi.bookingapp.PassengerSignInActivity"
+            android:name=".CustomerHomeActivity"
             android:exported="false" />
         <activity
-            android:name="s9648482ravipatiganeshsai.taxi.bookingapp.MainActivity"
+            android:name=".PassengerSignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PassengerSignInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.TaxiBooking">
