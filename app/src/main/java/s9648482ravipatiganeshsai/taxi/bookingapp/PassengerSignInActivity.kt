@@ -232,10 +232,9 @@ fun loginPassenger(passengerData: PassengerData, context: Context) {
                     TaxiBookingSP.persistLoginState(context, true)
                     TaxiBookingSP.persistUserMail(context, taxiData.emailId)
                     TaxiBookingSP.persistUserName(context, taxiData.userName)
-                    Toast.makeText(context, "Login Sucessfully", Toast.LENGTH_SHORT).show()
 
-//                    context.startActivity(Intent(context, HomeActivity::class.java))
-//                    (context as Activity).finish()
+                    context.startActivity(Intent(context, CustomerHomeActivity::class.java))
+                    (context as Activity).finish()
                 } else {
                     Toast.makeText(context, "Seems Incorrect Credentials", Toast.LENGTH_SHORT).show()
                 }

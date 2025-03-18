@@ -67,8 +67,18 @@ fun TaxiStartingValidation() {
         TaxiStartingScreen()
 
     } else {
-        context.startActivity(Intent(context, PassengerSignInActivity::class.java))
-        context.finish()
+
+        val loginStatus = TaxiBookingSP.fetchLoginState(context)
+
+        if(loginStatus)
+        {
+            context.startActivity(Intent(context, CustomerHomeActivity::class.java))
+            context.finish()
+        }else{
+            context.startActivity(Intent(context, PassengerSignInActivity::class.java))
+            context.finish()
+        }
+
     }
 
 }
