@@ -3,6 +3,7 @@ package s9648482ravipatiganeshsai.taxi.bookingapp
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.window.SplashScreen
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -21,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -50,37 +52,31 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
 @Composable
 fun TaxiStartingValidation() {
-    val context = LocalContext.current as Activity
-    var showSplash by remember { mutableStateOf(true) }
+    var shouldShowSplash by remember { mutableStateOf(true) }
 
-    DisposableEffect(Unit) {
-        val job = CoroutineScope(Dispatchers.Main).launch {
-            delay(3000)
-            showSplash = false
-        }
-        onDispose { job.cancel() }
+    val appContext = LocalContext.current as Activity
+
+    LaunchedEffect(Unit) {
+        delay(3000) // 3 seconds delay
+        shouldShowSplash = false
     }
-
-    if (showSplash) {
+    if (shouldShowSplash) {
         TaxiStartingScreen()
-
     } else {
+        val driverCheckStatus = DriverAccountDetails.fetchLoginState(appContext)
 
-        val loginStatus = TaxiBookingSP.fetchLoginState(context)
-
-        if(loginStatus)
-        {
-            context.startActivity(Intent(context, CustomerHomeActivity::class.java))
-            context.finish()
-        }else{
-            context.startActivity(Intent(context, PassengerSignInActivity::class.java))
-            context.finish()
+        if (driverCheckStatus) {
+            appContext.startActivity(Intent(appContext, CustomerHomeActivity::class.java))
+            appContext.finish()
         }
-
+        else {
+            appContext.startActivity(Intent(appContext, PassengerSignInActivity::class.java))
+            appContext.finish()
+        }
     }
-
 }
 
 

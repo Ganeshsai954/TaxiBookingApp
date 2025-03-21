@@ -3,7 +3,7 @@ package s9648482ravipatiganeshsai.taxi.bookingapp
 import android.content.Context
 
 
-object TaxiBookingSP {
+object DriverAccountDetails {
 
     fun persistLoginState(context: Context, value: Boolean) {
         val userLogin = context.getSharedPreferences("TAXI_BOOKING_DETAILS", Context.MODE_PRIVATE)

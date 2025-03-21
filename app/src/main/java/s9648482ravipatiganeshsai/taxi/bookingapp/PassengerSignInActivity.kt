@@ -52,8 +52,8 @@ class PassengerSignInActivity : ComponentActivity() {
 @Composable
 fun PassengerSignInScreen() {
 
-    var accountEmail by remember { mutableStateOf("") }
-    var accountPassword by remember { mutableStateOf("") }
+    var driverEmail by remember { mutableStateOf("") }
+    var driverPassword by remember { mutableStateOf("") }
 
     val context = LocalContext.current as Activity
 
@@ -119,8 +119,8 @@ fun PassengerSignInScreen() {
                     .background(
                         color = colorResource(id = R.color.white),
                     ),
-                value = accountEmail,
-                onValueChange = { accountEmail = it },
+                value = driverEmail,
+                onValueChange = { driverEmail = it },
                 placeholder = { Text(text = "Email") }
             )
 
@@ -133,8 +133,8 @@ fun PassengerSignInScreen() {
                     .background(
                         color = colorResource(id = R.color.white),
                     ),
-                value = accountPassword,
-                onValueChange = { accountPassword = it },
+                value = driverPassword,
+                onValueChange = { driverPassword = it },
                 placeholder = { Text(text = "Password") }
             )
 
@@ -144,25 +144,21 @@ fun PassengerSignInScreen() {
                 modifier = Modifier
                     .clickable {
                         when{
-
-
-                            accountEmail.isBlank() -> {
+                            driverEmail.isEmpty() -> {
                                 Toast.makeText(context, "MailID missing", Toast.LENGTH_SHORT)
                                     .show()
                             }
-                            accountPassword.isBlank() -> {
+                            driverPassword.isEmpty() -> {
                                 Toast.makeText(context, "Password missing", Toast.LENGTH_SHORT)
                                     .show()
-
                             }
                             else -> {
 
                                 val passengerData = PassengerData(
                                     "",
-                                    accountEmail,
+                                    driverEmail,
                                     "",
-                                    accountPassword
-
+                                    driverPassword
                                 )
 
                                 loginPassenger(passengerData, context)
@@ -229,9 +225,9 @@ fun loginPassenger(passengerData: PassengerData, context: Context) {
             if (taxiData != null) {
                 if (taxiData.password == passengerData.password) {
                     Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show()
-                    TaxiBookingSP.persistLoginState(context, true)
-                    TaxiBookingSP.persistUserMail(context, taxiData.emailId)
-                    TaxiBookingSP.persistUserName(context, taxiData.userName)
+                    DriverAccountDetails.persistLoginState(context, true)
+                    DriverAccountDetails.persistUserMail(context, taxiData.emailId)
+                    DriverAccountDetails.persistUserName(context, taxiData.userName)
 
                     context.startActivity(Intent(context, CustomerHomeActivity::class.java))
                     (context as Activity).finish()

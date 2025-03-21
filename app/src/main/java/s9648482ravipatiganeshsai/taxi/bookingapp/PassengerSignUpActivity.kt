@@ -56,9 +56,9 @@ class PassengerSignUpActivity : ComponentActivity() {
 @Composable
 fun PassengerSignUpScreen() {
 
-    var accountName by remember { mutableStateOf("") }
-    var accountEmail by remember { mutableStateOf("") }
-    var accountPassword by remember { mutableStateOf("") }
+    var driverName by remember { mutableStateOf("") }
+    var driverEmail by remember { mutableStateOf("") }
+    var driverPassword by remember { mutableStateOf("") }
 
     var selectedGender by remember { mutableStateOf("Male") }
 
@@ -127,8 +127,8 @@ fun PassengerSignUpScreen() {
                     .background(
                         color = colorResource(id = R.color.white),
                     ),
-                value = accountName,
-                onValueChange = { accountName = it },
+                value = driverName,
+                onValueChange = { driverName = it },
                 placeholder = { Text(text = "Name") }
             )
 
@@ -141,8 +141,8 @@ fun PassengerSignUpScreen() {
                     .background(
                         color = colorResource(id = R.color.white),
                     ),
-                value = accountEmail,
-                onValueChange = { accountEmail = it },
+                value = driverEmail,
+                onValueChange = { driverEmail = it },
                 placeholder = { Text(text = "Email") }
             )
 
@@ -189,8 +189,8 @@ fun PassengerSignUpScreen() {
                     .background(
                         color = colorResource(id = R.color.white),
                     ),
-                value = accountPassword,
-                onValueChange = { accountPassword = it },
+                value = driverPassword,
+                onValueChange = { driverPassword = it },
                 placeholder = { Text(text = "Password") }
             )
 
@@ -201,23 +201,23 @@ fun PassengerSignUpScreen() {
                     .clickable {
                         when {
 
-                            accountName.isBlank() -> {
-                                Toast.makeText(context, "UserName missing", Toast.LENGTH_SHORT)
+                            driverName.isEmpty() -> {
+                                Toast.makeText(context, "Name missing", Toast.LENGTH_SHORT)
                                     .show()
 
                             }
 
-                            accountEmail.isBlank() -> {
+                            driverEmail.isEmpty() -> {
                                 Toast.makeText(context, "EmailId missing", Toast.LENGTH_SHORT)
                                     .show()
                             }
 
-                            selectedGender.isBlank() -> {
+                            selectedGender.isEmpty() -> {
                                 Toast.makeText(context, "Gender missing", Toast.LENGTH_SHORT)
                                     .show()
                             }
 
-                            accountPassword.isBlank() -> {
+                            driverPassword.isEmpty() -> {
                                 Toast.makeText(context, "Password missing", Toast.LENGTH_SHORT)
                                     .show()
                             }
@@ -225,10 +225,10 @@ fun PassengerSignUpScreen() {
                             else -> {
 
                                 val passengerData = PassengerData(
-                                    accountName,
-                                    accountEmail,
+                                    driverName,
+                                    driverEmail,
                                     selectedGender,
-                                    accountPassword
+                                    driverPassword
 
                                 )
 
