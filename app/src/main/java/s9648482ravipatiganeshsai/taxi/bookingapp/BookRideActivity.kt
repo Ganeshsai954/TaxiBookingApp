@@ -97,7 +97,6 @@ fun getCurrentLocation(context: Context, fusedLocationClient: FusedLocationProvi
                 onLocationFetched(latLng)  // Update State
                 Log.e("Location", "Lat: ${it.latitude}, Lng: ${it.longitude}")
 
-                // Move camera to current location
                 cameraPositionState.position = CameraPosition.fromLatLngZoom(latLng, 15f)
             } ?: Toast.makeText(
                 context,

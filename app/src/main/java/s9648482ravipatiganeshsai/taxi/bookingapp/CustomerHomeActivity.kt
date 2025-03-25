@@ -3,6 +3,7 @@ package s9648482ravipatiganeshsai.taxi.bookingapp
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -21,7 +22,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -89,27 +92,41 @@ fun CustomerHomeActivityScreen() {
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold
             )
+
+            Spacer(modifier = Modifier.weight(1f))
+            
+            Image(
+                modifier = Modifier
+                    .size(36.dp)
+                    .clickable {
+                        context.startActivity(Intent(context, PassengerSignInActivity::class.java))
+                        context.finish()
+                    },
+                painter = painterResource(id = R.drawable.ic_logout),
+                contentDescription = "Taxi Logout"
+            )
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-//            TaxiOptions()
 
-            EventCard(
+            TaxiItemCard(
                 title = "Book Ride",
-                caption = "Select pickUp and destination and book a ride",
+                caption = "Select pickup and destination and book a ride",
                 imageRes = R.drawable.taxi_banner1,
                 "Book Now"
             ) {
                 context.startActivity(Intent(context, BookRideActivity::class.java))
             }
 
-            EventCard(
+            TaxiItemCard(
                 title = "Rides History",
                 caption = "See the rides history along with other details",
                 imageRes = R.drawable.ic_booked_rides,
@@ -118,12 +135,13 @@ fun CustomerHomeActivityScreen() {
                 context.startActivity(Intent(context, RideHistoryActivity::class.java))
             }
 
-            EventCard(
-                title = "Driver Profile",
+            TaxiItemCard(
+                title = "My Profile",
                 caption = "See my account details and manage account",
                 imageRes = R.drawable.taxi_profile,
                 "View Profile"
             ) {
+                context.startActivity(Intent(context, PassengerProfileActivity::class.java))
 
             }
 
@@ -135,10 +153,10 @@ fun CustomerHomeActivityScreen() {
 }
 
 @Composable
-fun EventCard(
+fun TaxiItemCard(
     title: String,
     caption: String,
-    imageRes: Int, // Pass a drawable resource ID
+    imageRes: Int,
     buttonText: String,
     onBookNowClick: () -> Unit
 ) {
@@ -191,41 +209,6 @@ fun EventCard(
                 Text(text = buttonText)
             }
         }
-    }
-}
-
-
-@Composable
-fun TaxiOptions() {
-    val context = LocalContext.current as Activity
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        TaxiButtons(text = "Book a Ride") {
-            context.startActivity(Intent(context, BookRideActivity::class.java))
-            context.finish()
-        }
-        TaxiButtons(text = "See Booking Details") { /* Handle click */ }
-        TaxiButtons(text = "My Profile") { /* Handle click */ }
-    }
-}
-
-@Composable
-fun TaxiButtons(text: String, onClick: () -> Unit) {
-    Button(
-        onClick = onClick,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-            .height(60.dp),
-        shape = RoundedCornerShape(12.dp)
-    ) {
-        Text(text = text, fontSize = 18.sp, fontWeight = FontWeight.Bold)
     }
 }
 
